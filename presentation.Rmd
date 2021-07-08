@@ -1,0 +1,89 @@
+---
+ title: "Life Expectation and GDP"
+ subtitle: "Do people living in rich country live longer?"
+ output:
+   xaringan::moon_reader:
+     lib_dir: libs
+     nature:
+       highlightStyle: github
+       highlightLines: true
+       countIncrementalSlides: false
+---
+ 
+```{r, setup, echo = F, message = F, warning = F, fig.align='center'}
+library(tidyverse)
+knitr::opts_chunk$set(
+  fig.width = 10, fig.height = 5, fig.align = 'center'
+  ) 
+```
+ 
+# Definition
+
+### Gross domestic product (GDP):
+
+the total monetary or market value of all the finished goods and services produced within a country’s borders in a specific time period. As a broad measure of overall domestic production, it functions as a comprehensive scorecard of a given country’s economic health.
+
+--
+
+### Life expectancy:
+
+a statistical measure of the average time an organism is expected to live, based on the year of its birth, its current age, and other demographic factors including biological sex.
+ 
+---
+
+# Data 
+This table includes 7 countries, their life expectancy and GDP per Capita in year 2008.
+
+```{r, echo = F, message = F}
+library(gapminder)
+library(tidyverse)
+library(dplyr)
+library(kableExtra)
+tib <- gapminder
+column <- c(1,3,4,6)
+tib <- tib[,column]
+current_year <- 2007
+tib_filtered <- tib %>% 
+  filter(year == current_year) %>%
+  filter(country %in% c(
+    "Germany", 
+    "Australia",
+    "United States",
+    "Afghanistan",
+    "Bangladesh",
+    "Romania",
+    "Zambia"
+  ))
+
+knitr::kable(tib_filtered, booktabs ="T") %>%
+  kable_styling(bootstrap_options = "striped", position = "left") %>%
+  row_spec(6, background = "yellow") %>%
+  row_spec(7, background = "yellow")
+```
+
+???
+the data is from package: gapminder
+ 
+---
+
+# Figure
+
+The figure shows the relationship between lifeExp and gdpPerCap based the data of five continents in 2007.
+
+```{r, echo = F, message = F}
+library(gapminder)
+library(tidyverse)
+
+tib <- gapminder
+
+current_year <- 2007
+tib_filtered <- tib %>% 
+  filter(year == current_year)
+tib_filtered %>%
+  ggplot() +
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp, color = continent))
+  
+```
+ 
+
+We can see that GDP per Capcita is larger then the life expectancy is larger.
