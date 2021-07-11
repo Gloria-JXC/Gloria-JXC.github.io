@@ -70,7 +70,7 @@ the data is from package: gapminder
 
 The figure shows the relationship between lifeExp and gdpPerCap based the data of five continents in 2007.
 
-```{r, echo = F, message = F}
+```{r, results = "hide", echo = FALSE, message = FALSE}
 library(gapminder)
 library(tidyverse)
 
